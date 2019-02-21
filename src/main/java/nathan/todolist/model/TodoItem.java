@@ -10,7 +10,6 @@ import java.util.Objects;
 @Data
 @EqualsAndHashCode(of = "id")
 public class TodoItem {
-    static int global_id = 0;
     // == fields ==
     int id;
     String details;
@@ -18,8 +17,6 @@ public class TodoItem {
 
     //== constructor ==
     public TodoItem(String details, LocalDate deadline) {
-        global_id++;
-        this.id = global_id;
         this.details = details;
         this.deadline = deadline;
     }

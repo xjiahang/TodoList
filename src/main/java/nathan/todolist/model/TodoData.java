@@ -9,15 +9,18 @@ import java.util.*;
 public class TodoData {
     // fields
     private final List<TodoItem>  items = new ArrayList<>();
-
+    private static  int itemId = 1;
     // constructors
     public TodoData() {
-        items.add(new TodoItem("first", LocalDate.now()));
-        items.add(new TodoItem("second", LocalDate.now()));
+        addItem(new TodoItem("first", LocalDate.now()));
+        addItem(new TodoItem("second", LocalDate.now()));
     }
 
     // methods
     public void addItem(@NonNull TodoItem toAdd) {
+
+        toAdd.setId(itemId);
+        itemId++;
         items.add(toAdd);
     }
 
