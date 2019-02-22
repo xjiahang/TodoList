@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -41,16 +42,31 @@ public class TodoItemController {
 
     //http://localhost:8080/TodoList/add_item
     @GetMapping(Mappings.ADD_ITEM)
-    public String get_add_item(Model model) {
-        TodoItem newItem = new TodoItem("", LocalDate.now());
-        log.info("todoItem = {}", newItem.toString());
-        model.addAttribute(Attributes.TODO_ITEM, newItem);
+    public String get_add_item(@RequestParam (required = false, defaultValue = "-1")int id,  Model model) {
+        TodoItem item;
+        if (id == -1) {
+            item = new TodoItem("", LocalDate.now());
+        } else {
+            item = service.getItem(id);
+            //if item is null, what to return?
+            if (item == null) {
+                return "redirect:/" + Mappings.ITEMS;
+            }
+
+        }
+
+        model.addAttribute(Attributes.TODO_ITEM, item);
+        log.info("todoItem = {}", item.toString());
+
         return Views.ADD_ITEM;
     }
 
     @PostMapping(Mappings.ADD_ITEM)
     public String post_add_item(@ModelAttribute(Attributes.TODO_ITEM)  TodoItem todoItem) {
-        service.addItem(todoItem);
+        if (todoItem.getId() == 0)
+            service.addItem(todoItem);
+        else
+            service.updateItem(todoItem);
         log.info("post_add_item todoItem []", todoItem.toString());
         return "redirect:/" + Mappings.ITEMS;
     }
@@ -63,4 +79,6 @@ public class TodoItemController {
         service.removeItem(id);
         return "redirect:/" + Mappings.ITEMS;
     }
+
+
 }
