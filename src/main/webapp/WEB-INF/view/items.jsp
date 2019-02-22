@@ -18,12 +18,14 @@
             </tr>
 
             <c:forEach items="${todoData.items}" var="todoItem">
+            <c:url var="deleteUrl" value="${Mappings.DELETE_ITEM}">
+                <c:param name="id" value="${todoItem.id}"/>
+            </c:url>
             <tr>
                 <th><c:out value="${todoItem.id}"/></th>
                 <th><c:out value="${todoItem.details}"/></th>
                 <th><c:out value="${todoItem.deadline}"/></th>
                 <th>
-                    <c:url var="deleteUrl" value="{Mappings.DELETE_ITEM}"/>
                     <a href="${deleteUrl}"> Delete </a>
                 </th>
             </tr>
