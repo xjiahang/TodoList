@@ -3,9 +3,10 @@ package nathan.todolist.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Objects;
+
 
 @Data
 @EqualsAndHashCode(of = "id")
@@ -13,6 +14,7 @@ public class TodoItem {
     // == fields ==
     int id;
     String details;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     LocalDate deadline;
 
     //== constructor ==

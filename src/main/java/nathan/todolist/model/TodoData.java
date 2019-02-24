@@ -2,7 +2,6 @@ package nathan.todolist.model;
 
 import lombok.NonNull;
 
-import java.awt.image.TileObserver;
 import java.time.LocalDate;
 import java.util.*;
 

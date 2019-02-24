@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th><form:label path="deadline">deadline</form:label></th>
-                <th><form:input path="deadline"/></th>
+                <th><form:input path="deadline"/>MM/dd/yyyy</th>
             </tr>
             <tr>
                 <td><input type="submit" value="add"/></td>

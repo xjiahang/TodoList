@@ -8,6 +8,7 @@ import nathan.todolist.util.Attributes;
 import nathan.todolist.util.Mappings;
 import nathan.todolist.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,10 +43,10 @@ public class TodoItemController {
 
     //http://localhost:8080/TodoList/add_item
     @GetMapping(Mappings.ADD_ITEM)
-    public String get_add_item(@RequestParam (required = false, defaultValue = "-1")int id,  Model model) {
+    public String get_add_item(@RequestParam (required = false, defaultValue = "-1")int id, Model model) {
         TodoItem item;
         if (id == -1) {
-            item = new TodoItem("", LocalDate.now());
+            item = new TodoItem("", null);
         } else {
             item = service.getItem(id);
             //if item is null, what to return?
@@ -55,19 +56,20 @@ public class TodoItemController {
 
         }
 
-        model.addAttribute(Attributes.TODO_ITEM, item);
         log.info("todoItem = {}", item.toString());
+        model.addAttribute(Attributes.TODO_ITEM, item);
 
         return Views.ADD_ITEM;
     }
 
     @PostMapping(Mappings.ADD_ITEM)
-    public String post_add_item(@ModelAttribute(Attributes.TODO_ITEM)  TodoItem todoItem) {
+    public String post_add_item(@ModelAttribute(Attributes.TODO_ITEM) TodoItem todoItem) {
         if (todoItem.getId() == 0)
             service.addItem(todoItem);
         else
             service.updateItem(todoItem);
-        log.info("post_add_item todoItem []", todoItem.toString());
+        log.info("post_add_item todoItem {}", todoItem);
+
         return "redirect:/" + Mappings.ITEMS;
     }
 
